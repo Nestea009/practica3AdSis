@@ -19,13 +19,6 @@ fi
 OPCION=$1
 FICHERO=$2
 
-# Comprobación de opción
-if [[ ! "$OPCION" =~ ^(-a|-s)$ ]]
-then
-    echo "Opción inválida" <&2
-    exit 1
-fi
-
 # Comprobar archivo de log
 FECHA=$(date +"%Y_%m_%d")
 USUARIO=$(whoami)
@@ -38,4 +31,32 @@ then
     dir_destino=$(ls "$FECHA"_"$USUARIO"_provisioning.log 2>/dev/null)
 fi
 
+if [[ "$OPCION" == "-a" ]]
+then
+# Añadir
+    while IFS=',' read -r USER PASS FULLNAME
+    do
 
+
+
+    done < "$FICHERO"  # Revisar
+
+elif [[ "$OPCION" == "-s" ]]
+then
+# Suprimir
+
+    while IFS=',' read -r USER
+    do
+
+    # HAY QUE IGNORAR EL PASS Y EL FULLUSERNAME
+    
+
+    done < "$FICHERO"  # Revisar
+
+# Comprobación de opción
+else
+    echo "Opción inválida" <&2
+    exit 1
+fi
+
+exit 0
