@@ -37,9 +37,9 @@ then
     while IFS=',' read -r USER PASS FULLNAME
     do
 
+        echo "Añadir usuario"
 
-
-    done < "$FICHERO"  # Revisar
+    done
 
 elif [[ "$OPCION" == "-s" ]]
 then
@@ -49,9 +49,9 @@ then
     do
 
     # HAY QUE IGNORAR EL PASS Y EL FULLUSERNAME
-    
+        echo "Suprimir usuario"
 
-    done < "$FICHERO"  # Revisar
+    done
 
 # Comprobación de opción
 else
