@@ -44,7 +44,7 @@ then
             continue
         fi
 
-        if [ id "$USER" &>/dev/null ]
+        if  id "$USER" &>/dev/null 
         then
             MENSAJE="El usuario $USER ya existe"
             echo "$MENSAJE"
@@ -60,7 +60,7 @@ then
                 nuevo_uid=1815
             fi
         
-        
+        useradd -m -k /etc/skel -u "$nuevo_uid" -U -c "$FULLNAME" "$USER"
 
         # Contraseña caduca en 30 días
         # Si se ha creado, escribir por pantalla el nombre completo y "ha sido creado"
@@ -82,7 +82,7 @@ then
 
 # Comprobación de opción
 else
-    echo "Opción inválida" <&2
+    echo "Opción inválida" >&2
     exit 1
 fi
 
