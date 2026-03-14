@@ -37,7 +37,34 @@ then
     while IFS=',' read -r USER PASS FULLNAME
     do
 
-        echo "Añadir usuario"
+        if ([ -z "$USER" ] || [ -z "$PASS" ] || [ -z "$FULLNAME" ] )
+        then
+            echo "Campo invalido"
+            echo "Campo invalido" >> "$dir_destino"
+            continue
+        fi
+
+        if [ id "$USER" &>/dev/null ]
+        then
+            MENSAJE="El usuario $USER ya existe"
+            echo "$MENSAJE"
+            echo "$MENSAJE" >> "$dir_destino"
+            continue
+        fi
+
+        uid=$(tail -n 1 /etc/passwd | cut -d: -f3)
+
+            if [ "$uid" -gt 1815 ]; then
+                nuevo_uid=$((uid + 1))
+            else
+                nuevo_uid=1815
+            fi
+
+            echo "$nuevo_uid"
+
+        # Contraseña caduca en 30 días
+        # Si se ha creado, escribir por pantalla el nombre completo y "ha sido creado"
+        # Si el usuario ya existe, escribir por pantalla "El usuario <nombre_usuario> ya existe" y escribirlo también en el log
 
     done < "$FICHERO"
 
@@ -49,7 +76,7 @@ then
     do
 
     # HAY QUE IGNORAR EL PASS Y EL FULLUSERNAME
-        echo "Suprimir usuario"
+        
 
     done < "$FICHERO"
 
@@ -58,6 +85,9 @@ else
     echo "Opción inválida" <&2
     exit 1
 fi
+
+
+
 
 exit 0
 
