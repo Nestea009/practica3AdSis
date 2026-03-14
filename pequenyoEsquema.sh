@@ -62,7 +62,10 @@ then
         
         /usr/sbin/useradd -m -k /etc/skel -u "$nuevo_uid" -U -c "$FULLNAME" "$USER"
         echo "$USER:$PASS" | /usr/sbin/chpasswd
-        /usr/sbin/chage -M 30 "$USER"
+        chage -M 30 "$USER"
+
+        echo "$USER ha sido creado"
+        echo "$USER ha sido creado" >> "$dir_destino"
 
         # Contraseña caduca en 30 días
         # Si se ha creado, escribir por pantalla el nombre completo y "ha sido creado"
@@ -74,11 +77,29 @@ elif [ "$OPCION" = "-s" ]
 then
 # Suprimir
 
-    while IFS=',' read -r USER
-    do
+    mkdir -p /extra/backup
 
-    # HAY QUE IGNORAR EL PASS Y EL FULLUSERNAME
-        echo "Suprimir $USER"
+    while IFS=',' read -r USER || [ -n "$USER" ]
+    do
+    # meter el backup en /extra/backup con el nombre <nombre_usuario>.tar.gz
+        if id "$USER" &>/dev/null 
+        then
+            tar -czf "/extra/backup/$USER.tar" "/home/$USER"
+        else
+            MENSAJE="El usuario $USER no existe"
+            echo "$MENSAJE"
+            echo "$MENSAJE" >> "$dir_destino"
+            continue
+        fi
+        # HAY QUE IGNORAR EL PASS Y EL FULLUSERNAME
+        if ([ -z "$USER" ])
+            then
+                echo "Campo invalido"
+                echo "Campo invalido" >> "$dir_destino"
+                continue
+            fi
+        
+        /usr/sbin/userdel -r "$USER"
 
     done < "$FICHERO"
 
