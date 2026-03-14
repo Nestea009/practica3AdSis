@@ -60,7 +60,7 @@ then
                 nuevo_uid=1815
             fi
         
-        useradd -m -k /etc/skel -u "$nuevo_uid" -U -c "$FULLNAME" "$USER"
+        /usr/sbin/useradd -m -k /etc/skel -u "$nuevo_uid" -U -c "$FULLNAME" "$USER"
 
         # Contraseña caduca en 30 días
         # Si se ha creado, escribir por pantalla el nombre completo y "ha sido creado"
