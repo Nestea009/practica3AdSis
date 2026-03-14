@@ -86,7 +86,7 @@ then
         then
             if tar -cf "/extra/backup/$USER.tar" -C /home "$USER" 
             then
-                /usr/sbin/userdel -r "$USER"
+                /usr/sbin/userdel -r "$USER" &>/dev/null
                 # Si el tar sale mal hay que hacer algo (lo pone en el último punto) 
             else 
                 continue
@@ -104,8 +104,6 @@ then
                 echo "Campo invalido" >> "$dir_destino"
                 continue
             fi
-
-        /usr/sbin/userdel -r "$USER" <&>/dev/null
 
     done < "$FICHERO"
 
