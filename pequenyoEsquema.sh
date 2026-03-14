@@ -61,7 +61,9 @@ then
             fi
         
         /usr/sbin/useradd -m -k /etc/skel -u "$nuevo_uid" -U -c "$FULLNAME" "$USER"
-
+        echo "$USER:$PASS" | chpasswd
+        chage -M 30 "$USER"
+        
         # Contraseña caduca en 30 días
         # Si se ha creado, escribir por pantalla el nombre completo y "ha sido creado"
         # Si el usuario ya existe, escribir por pantalla "El usuario <nombre_usuario> ya existe" y escribirlo también en el log
