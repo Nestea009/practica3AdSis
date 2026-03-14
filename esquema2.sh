@@ -39,13 +39,6 @@ LOG="${FECHA}_${USUARIO}_provisioning.log"
 touch "$LOG"
 
 #################################
-# Función obtener UID >=1815
-#################################
-get_next_uid() {
-    awk -F: '$3>=1815 {print $3}' /etc/passwd | sort -n | tail -1 | awk '{print $1+1}'
-}
-
-#################################
 # 5. Añadir usuarios
 #################################
 if [ "$OPCION" = "-a" ]; then
