@@ -31,7 +31,7 @@ then
     dir_destino=$(ls "$FECHA"_"$USUARIO"_provisioning.log 2>/dev/null)
 fi
 
-if [ "$OPCION" == "-a" ]
+if [ "$OPCION" = "-a" ]
 then
 # Añadir
     while IFS=',' read -r USER PASS FULLNAME
@@ -39,9 +39,9 @@ then
 
         echo "Añadir usuario"
 
-    done
+    done < "$FICHERO"
 
-elif [ "$OPCION" == "-s" ]
+elif [ "$OPCION" = "-s" ]
 then
 # Suprimir
 
@@ -51,7 +51,7 @@ then
     # HAY QUE IGNORAR EL PASS Y EL FULLUSERNAME
         echo "Suprimir usuario"
 
-    done
+    done < "$FICHERO"
 
 # Comprobación de opción
 else
@@ -60,3 +60,8 @@ else
 fi
 
 exit 0
+
+# COMO COMPILAR:
+# No sé porqué pero no deja ejecutar con sh pequenyoEsquema.sh
+# Pero sí que va con ./pequenyoEsquema -a fichero.txt
+# Haciendo antes un chmod +x pequenyoEsquema
