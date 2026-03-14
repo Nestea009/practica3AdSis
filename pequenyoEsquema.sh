@@ -34,7 +34,7 @@ fi
 if [ "$OPCION" = "-a" ]
 then
 # Añadir
-    while IFS=',' read -r USER PASS FULLNAME
+    while IFS=',' read -r USER PASS FULLNAME || [ -n "$USER" ]
     do
 
         if ([ -z "$USER" ] || [ -z "$PASS" ] || [ -z "$FULLNAME" ] )
