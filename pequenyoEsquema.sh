@@ -65,3 +65,26 @@ exit 0
 # No sé porqué pero no deja ejecutar con sh pequenyoEsquema.sh
 # Pero sí que va con ./pequenyoEsquema -a fichero.txt
 # Haciendo antes un chmod +x pequenyoEsquema
+
+
+# Reqisitos:
+
+    # Crear usuarios con useradd, chpasswd
+
+    # UID ≥ 1815
+
+    # Grupo con el mismo nombre
+
+    # Home creado con /etc/skel
+
+    # Caducidad de contraseña 30 días
+
+    # Registrar acciones en log
+
+    # Comprobar si usuario existe
+
+    # Backup antes de borrar en /extra/backup
+
+    # Borrado con userdel -r
+
+    # Usar tar para backup
