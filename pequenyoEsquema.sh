@@ -39,15 +39,18 @@ then
     while IFS=',' read -r USER PASS FULLNAME || [ -n "$USER" ]
     do
 
+        if  id "$USER" &>/dev/null 
+        then
+            MENSAJE="El usuario $USER ya existe"
+            echo "$MENSAJE"
+            echo "$MENSAJE" >> "$dir_destino"
+            continue
+        fi
+
         if ([ -z "$USER" ] || [ -z "$PASS" ] || [ -z "$FULLNAME" ] )
         then
             echo "Campo invalido"
             echo "Campo invalido" >> "$dir_destino"
-            continue
-        fi
-
-        if  id "$USER" &>/dev/null 
-        then
             continue
         fi
 
@@ -91,9 +94,6 @@ then
                 continue
             fi
         else
-            MENSAJE="El usuario $USER no existe"
-            echo "$MENSAJE"
-            echo "$MENSAJE" >> "$dir_destino"
             continue
         fi
         # HAY QUE IGNORAR EL PASS Y EL FULLUSERNAME
