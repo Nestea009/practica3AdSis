@@ -84,7 +84,13 @@ then
     # meter el backup en /extra/backup con el nombre <nombre_usuario>.tar.gz
         if id "$USER" &>/dev/null 
         then
-            tar -czf "/extra/backup/$USER.tar" -C /home "$USER"
+            if tar -cf "/extra/backup/$USER.tar" -C /home "$USER" 
+            then
+                /usr/sbin/userdel -r "$USER"
+                # Si el tar sale mal hay que hacer algo (lo pone en el último punto) 
+            else 
+                continue
+            fi
         else
             MENSAJE="El usuario $USER no existe"
             echo "$MENSAJE"
@@ -99,7 +105,7 @@ then
                 continue
             fi
 
-        /usr/sbin/userdel -r "$USER"
+        /usr/sbin/userdel -r "$USER" <&>/dev/null
 
     done < "$FICHERO"
 
