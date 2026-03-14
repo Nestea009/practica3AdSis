@@ -10,7 +10,7 @@
 #fi
 
 # Comprobación de parámetros
-if [[ "$#" -ne 2 ]]
+if [ "$#" -ne 2 ]
 then
     echo "Número incorrecto de parámetros"
     exit 1
@@ -25,13 +25,13 @@ USUARIO=$(whoami)
 
 dir_destino=$(ls "$FECHA"_"$USUARIO"_provisioning.log 2>/dev/null)
 
-if [[ -z "$dir_destino" ]]
+if [ -z "$dir_destino" ]
 then
     touch "$FECHA"_"$USUARIO"_provisioning.log
     dir_destino=$(ls "$FECHA"_"$USUARIO"_provisioning.log 2>/dev/null)
 fi
 
-if [[ "$OPCION" == "-a" ]]
+if [ "$OPCION" == "-a" ]
 then
 # Añadir
     while IFS=',' read -r USER PASS FULLNAME
@@ -41,7 +41,7 @@ then
 
     done
 
-elif [[ "$OPCION" == "-s" ]]
+elif [ "$OPCION" == "-s" ]
 then
 # Suprimir
 
