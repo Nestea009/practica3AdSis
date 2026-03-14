@@ -1,13 +1,15 @@
 #!/bin/bash
+#898447, Alejaldre Martin, Hector, M, 3, B
+#926915, Blanco Ramos, Nestor, M, 3, B
 
 # Parámetros: $1: {-a|-s}, $2: <nombre_fichero>
 
 # Comprobación de permisos
-#if [[ "$EUID" -ne 0 ]]
-#then
-#    echo "Este script necesita privilegios de administracion" 
-#    exit 1
-#fi
+if id -nG "$USER" | grep -qw sudo
+then
+    echo "Este script necesita privilegios de administracion" 
+    exit 1
+fi
 
 # Comprobación de parámetros
 if [ "$#" -ne 2 ]
@@ -46,9 +48,6 @@ then
 
         if  id "$USER" &>/dev/null 
         then
-            MENSAJE="El usuario $USER ya existe"
-            echo "$MENSAJE"
-            echo "$MENSAJE" >> "$dir_destino"
             continue
         fi
 
@@ -109,7 +108,7 @@ then
 
 # Comprobación de opción
 else
-    echo "Opción inválida" >&2
+    echo "Opción invalida" >&2
     exit 1
 fi
 
