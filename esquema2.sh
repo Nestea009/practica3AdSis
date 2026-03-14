@@ -73,22 +73,22 @@ if [ "$OPCION" = "-a" ]; then
 
         NEW_UID=$(get_next_uid)
 
-        useradd -m \
-                -k /etc/skel \
-                -u "$NEW_UID" \
-                -U \
-                -c "$FULLNAME" \
-                "$USER"
+        /usr/sbin/useradd -m \
+                        -k /etc/skel \
+                        -u "$NEW_UID" \
+                        -U \
+                        -c "$FULLNAME" \
+                        "$USER"
 
-        # establecer contraseña
-        echo "$USER:$PASS" | chpasswd
+        if /usr/sbin/useradd -m -k /etc/skel -u "$NEW_UID" -U -c "$FULLNAME" "$USER"
+        then
+            echo "$USER:$PASS" | /usr/sbin/chpasswd
+            /usr/bin/chage -M 30 "$USER"
 
-        # caducidad contraseña 30 días
-        chage -M 30 "$USER"
-
-        MENSAJE="$FULLNAME ha sido creado"
-        echo "$MENSAJE"
-        echo "$MENSAJE" >> "$LOG"
+            MENSAJE="$FULLNAME ha sido creado"
+            echo "$MENSAJE"
+            echo "$MENSAJE" >> "$LOG"
+        fi
 
     done < "$FICHERO"
 
@@ -119,7 +119,7 @@ elif [ "$OPCION" = "-s" ]; then
         # realizar backup
         if [ -d "$HOME_DIR" ]; then
 
-            tar -cf "$BACKUP" -C /home "$USER"
+            /usr/bin/tar -cf "$BACKUP" -C /home "$USER"
 
             if [ $? -ne 0 ]; then
                 # si falla backup no borrar
@@ -128,7 +128,7 @@ elif [ "$OPCION" = "-s" ]; then
         fi
 
         # borrar usuario completamente
-        userdel -r "$USER"
+        /usr/sbin/userdel -r "$USER"
 
     done < "$FICHERO"
 
