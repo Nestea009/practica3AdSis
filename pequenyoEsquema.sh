@@ -59,8 +59,8 @@ then
             else
                 nuevo_uid=1815
             fi
-
-            echo "$nuevo_uid"
+        
+        
 
         # Contraseña caduca en 30 días
         # Si se ha creado, escribir por pantalla el nombre completo y "ha sido creado"
@@ -76,7 +76,7 @@ then
     do
 
     # HAY QUE IGNORAR EL PASS Y EL FULLUSERNAME
-        
+        echo "Suprimir $USER"
 
     done < "$FICHERO"
 
