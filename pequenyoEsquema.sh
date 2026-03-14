@@ -79,7 +79,7 @@ then
 
     mkdir -p /extra/backup
 
-    while IFS=',' read -r USER || [ -n "$USER" ]
+    while IFS=',' read -r USER _ || [ -n "$USER" ]
     do
     # meter el backup en /extra/backup con el nombre <nombre_usuario>.tar.gz
         if id "$USER" &>/dev/null 
@@ -98,7 +98,7 @@ then
                 echo "Campo invalido" >> "$dir_destino"
                 continue
             fi
-        
+
         /usr/sbin/userdel -r "$USER"
 
     done < "$FICHERO"
