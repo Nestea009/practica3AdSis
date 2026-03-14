@@ -67,12 +67,15 @@ if [ "$OPCION" = "-a" ]; then
             continue
         fi
 
-        UID=$(get_next_uid)
+        get_next_uid() {
+            awk -F: '$3>=1815 {print $3}' /etc/passwd | sort -n | tail -1 | awk '{print $1+1}'
+        }
 
-        # crear usuario
+        NEW_UID=$(get_next_uid)
+
         useradd -m \
                 -k /etc/skel \
-                -u "$UID" \
+                -u "$NEW_UID" \
                 -U \
                 -c "$FULLNAME" \
                 "$USER"
