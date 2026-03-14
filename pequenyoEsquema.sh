@@ -84,7 +84,7 @@ then
     # meter el backup en /extra/backup con el nombre <nombre_usuario>.tar.gz
         if id "$USER" &>/dev/null 
         then
-            tar -czf "/extra/backup/$USER.tar" "/home/$USER"
+            tar -czf "/extra/backup/$USER.tar" -C /home "$USER"
         else
             MENSAJE="El usuario $USER no existe"
             echo "$MENSAJE"
