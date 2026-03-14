@@ -68,10 +68,19 @@ if [ "$OPCION" = "-a" ]; then
         fi
 
         get_next_uid() {
-            awk -F: '$3>=1815 {print $3}' /etc/passwd | sort -n | tail -1 | awk '{print $1+1}'
+
+        LAST_UID=$(awk -F: '$3>=1815 && $3<=60000 {print $3}' /etc/passwd | sort -n | tail -1)
+
+        if [ -z "$LAST_UID" ]
+        then
+            NEW_UID=1815
+        else
+            NEW_UID=$((LAST_UID+1))
+        fi
+
         }
 
-        NEW_UID=$(get_next_uid)
+        get_next_uid
 
         /usr/sbin/useradd -m \
                         -k /etc/skel \
