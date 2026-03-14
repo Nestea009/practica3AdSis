@@ -54,7 +54,7 @@ then
 
         uid=$(tail -n 1 /etc/passwd | cut -d: -f3)
 
-            if [ "$uid" -gt 1815 ]; then
+            if [ "$uid" -ge 1815 ]; then
                 nuevo_uid=$((uid + 1))
             else
                 nuevo_uid=1815
